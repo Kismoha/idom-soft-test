@@ -17,12 +17,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @EnableAutoConfiguration
 public class PersonReceiver {
 
+    private PersonValidator validator = new PersonValidator();
+
     @RequestMapping( value="/postPerson",
     produces = APPLICATION_JSON_VALUE)
     Map<String, Object> validatePerson(@RequestBody PersonDTO person) {
         Map<String, Object> result = new HashMap<>();
-        result.put("Errors",new ArrayList<>());
-        result.put("Person", person);
+        result.put("Errors :", validator.validatePerson(person));
+        result.put("Person :", person);
         return result;
     }
 

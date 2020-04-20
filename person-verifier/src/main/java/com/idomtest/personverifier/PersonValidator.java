@@ -2,6 +2,7 @@ package com.idomtest.personverifier;
 
 import com.idomtest.personverifier.entities.Error;
 import com.idomtest.personverifier.entities.PersonDTO;
+import org.json.simple.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,8 @@ public class PersonValidator
     private static final String HUNGARIAN_LETTERS = "öÖüÜóÓőŐúÚéÉáÁűŰíÍ";
     private static final String DR = "(Dr.){0,1}";
 
+    private CitizenshipDictionary dictionary = CitizenshipDictionary.getInstance();
+
     public List<Error> validatePerson(PersonDTO person){
         List<Error> errors = new ArrayList<>();
         errors.add(validateName(person.getCurrentName()));
@@ -28,7 +31,16 @@ public class PersonValidator
     }
 
     private Error validateCitizenship(String citizenship) {
-        return null;
+        if(citizenship != null && citizenship.length() == 3){
+
+            for(JSONObject item : dictionary.getDictionary()){
+
+                if(item.get("kod").equals(citizenship)){
+                    return null;
+                }
+            }
+        }
+        return new Error("Person DTO Error","Hibás állampolgárság!");
     }
 
     private Error validateGender(char gender) {
@@ -41,14 +53,15 @@ public class PersonValidator
     private Error validateBirthDate(String birthDate) {
         try {
             Date date = new SimpleDateFormat("yyyy.MM.dd").parse(birthDate);
-        } catch (ParseException e) {
+            //TODO : between 18 and 80
+        } catch (ParseException | NullPointerException e) {
             return new Error(PersonDTO.class.toString(),"Rossz születési dátum formátum! Megengedett: yyyy.MM.dd");
         }
         return null;
     }
 
-    private Error validateName(String mothersName) {
-        if(Pattern.matches(DR+"[a-zA-z.Ä/\"\\-\\s"+HUNGARIAN_LETTERS+"]{2,}"+DR,mothersName) && mothersName.length() <= 80){
+    private Error validateName(String name) {
+        if(name != null && Pattern.matches(DR+"[a-zA-z.Ä/\"\\-\\s"+HUNGARIAN_LETTERS+"]{2,}"+DR,name) && name.length() <= 80){
             return null;
         }
         return new Error(PersonDTO.class.toString(),"Hibás név formátum! Legalább két névelemnek kell lennie, " +

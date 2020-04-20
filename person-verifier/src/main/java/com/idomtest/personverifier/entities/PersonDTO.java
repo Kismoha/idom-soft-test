@@ -9,7 +9,7 @@ public class PersonDTO {
     private char gender;
     private String birthDate;
     private String citizenship;
-    private String citizenshipCode;
+    private String citizenshipDecode;
     private List<DocumentDTO> documents;
 
 
@@ -61,12 +61,12 @@ public class PersonDTO {
         this.citizenship = citizenship;
     }
 
-    public String getCitizenshipCode() {
-        return citizenshipCode;
+    public String getCitizenshipDecode() {
+        return citizenshipDecode;
     }
 
-    public void setCitizenshipCode(String citizenshipCode) {
-        this.citizenshipCode = citizenshipCode;
+    public void setCitizenshipDecode(String citizenshipDecode) {
+        this.citizenshipDecode = citizenshipDecode;
     }
 
     public List<DocumentDTO> getDocuments() {
