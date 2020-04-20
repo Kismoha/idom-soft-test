@@ -1,13 +1,16 @@
 package com.idomtest.personverifier.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DocumentDTO {
+public class DocumentDTO implements Serializable {
     private int documentType;
     private String documentNumber;
     private String documentPicture;
     private String expirationDate;
     private boolean valid;
+
+    private static final long serialVersionUID = 1L;
 
     public int getDocumentType() {
         return documentType;

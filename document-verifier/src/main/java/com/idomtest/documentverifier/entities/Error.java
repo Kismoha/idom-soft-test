@@ -1,10 +1,14 @@
 package com.idomtest.documentverifier.entities;
 
-public class Error {
+import java.io.Serializable;
+
+public class Error implements Serializable {
     String type;
     String description;
 
-    public Error(String type, String description) {
+    private static final long serialVersionUID = 1L;
+
+    public Error(String type, String description){
         this.type = type;
         this.description = description;
     }

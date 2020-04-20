@@ -44,7 +44,7 @@ public class CitizenshipDictionary {
 
     public static CitizenshipDictionary getInstance() {
         if(instance == null){
-            return new CitizenshipDictionary();
+            instance = new CitizenshipDictionary();
         }
         return instance;
     }

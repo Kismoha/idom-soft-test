@@ -1,13 +1,15 @@
 package com.idomtest.documentverifier.entities;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class DocumentDTO {
+public class DocumentDTO implements Serializable {
     private int documentType;
     private String documentNumber;
-    private byte[] documetnPicture;
-    private Date expirationDate;
+    private String documentPicture;
+    private String expirationDate;
     private boolean valid;
+
+    private static final long serialVersionUID = 1L;
 
     public int getDocumentType() {
         return documentType;
@@ -25,19 +27,19 @@ public class DocumentDTO {
         this.documentNumber = documentNumber;
     }
 
-    public byte[] getDocumetnPicture() {
-        return documetnPicture;
+    public String getDocumentPicture() {
+        return documentPicture;
     }
 
-    public void setDocumetnPicture(byte[] documetnPicture) {
-        this.documetnPicture = documetnPicture;
+    public void setDocumentPicture(String documentPicture) {
+        this.documentPicture = documentPicture;
     }
 
-    public Date getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 

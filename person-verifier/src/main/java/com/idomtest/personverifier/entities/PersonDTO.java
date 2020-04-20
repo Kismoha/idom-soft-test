@@ -1,8 +1,9 @@
 package com.idomtest.personverifier.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PersonDTO {
+public class PersonDTO implements Serializable {
     private String currentName;
     private String birthName;
     private String mothersName;
@@ -12,6 +13,7 @@ public class PersonDTO {
     private String citizenshipDecode;
     private List<DocumentDTO> documents;
 
+    private static final long serialVersionUID = 1L;
 
     public String getBirthDate() {
         return birthDate;

@@ -1,15 +1,27 @@
 package com.idomtest.documentverifier.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PersonDTO {
+public class PersonDTO implements Serializable {
     private String currentName;
     private String birthName;
     private String mothersName;
     private char gender;
+    private String birthDate;
     private String citizenship;
-    private String citizenshipCode;
+    private String citizenshipDecode;
     private List<DocumentDTO> documents;
+
+    private static final long serialVersionUID = 1L;
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
 
     public String getCurrentName() {
         return currentName;
@@ -51,12 +63,12 @@ public class PersonDTO {
         this.citizenship = citizenship;
     }
 
-    public String getCitizenshipCode() {
-        return citizenshipCode;
+    public String getCitizenshipDecode() {
+        return citizenshipDecode;
     }
 
-    public void setCitizenshipCode(String citizenshipCode) {
-        this.citizenshipCode = citizenshipCode;
+    public void setCitizenshipDecode(String citizenshipDecode) {
+        this.citizenshipDecode = citizenshipDecode;
     }
 
     public List<DocumentDTO> getDocuments() {
