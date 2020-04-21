@@ -1,6 +1,6 @@
 package com.idomtest.documentverifier;
 
-import com.idomtest.documentverifier.entities.PersonDTO;
+import com.idomtest.resources.PersonDTO;
 
 import java.util.ArrayList;
 import java.util.List;

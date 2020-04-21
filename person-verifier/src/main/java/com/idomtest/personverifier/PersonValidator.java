@@ -1,7 +1,7 @@
 package com.idomtest.personverifier;
 
-import com.idomtest.personverifier.entities.Error;
-import com.idomtest.personverifier.entities.PersonDTO;
+import com.idomtest.resources.PersonDTO;
+import com.idomtest.resources.Error;
 import org.json.simple.JSONObject;
 
 import java.text.ParseException;

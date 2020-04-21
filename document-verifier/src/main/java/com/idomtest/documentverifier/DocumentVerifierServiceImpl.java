@@ -1,7 +1,7 @@
 package com.idomtest.documentverifier;
 
-import com.idomtest.documentverifier.entities.DocumentVerifierService;
-import com.idomtest.documentverifier.entities.PersonDTO;
+import com.idomtest.resources.DocumentVerifierService;
+import com.idomtest.resources.PersonDTO;
 
 import java.util.HashMap;
 import java.util.Map;

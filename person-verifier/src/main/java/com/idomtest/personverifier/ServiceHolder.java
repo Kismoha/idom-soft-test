@@ -1,6 +1,6 @@
 package com.idomtest.personverifier;
 
-import com.idomtest.personverifier.entities.DocumentVerifierService;
+import com.idomtest.resources.DocumentVerifierService;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class ServiceHolder {

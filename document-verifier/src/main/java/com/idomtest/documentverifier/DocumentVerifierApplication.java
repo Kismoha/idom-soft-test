@@ -1,6 +1,6 @@
 package com.idomtest.documentverifier;
 
-import com.idomtest.documentverifier.entities.DocumentVerifierService;
+import com.idomtest.resources.DocumentVerifierService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

@@ -1,7 +1,7 @@
 package com.idomtest.personverifier;
 
-import com.idomtest.personverifier.entities.DocumentVerifierService;
-import com.idomtest.personverifier.entities.PersonDTO;
+import com.idomtest.resources.DocumentVerifierService;
+import com.idomtest.resources.PersonDTO;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
