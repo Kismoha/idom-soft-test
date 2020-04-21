@@ -12,7 +12,7 @@ public class DocumentVerifierServiceImpl implements DocumentVerifierService {
     @Override
     public Map<String, Object> validateDocuments(PersonDTO person) {
         Map<String, Object> result = new HashMap<>();
-        result.put("Errors", validator.validateDocuments(person));
+        result.put("Errors", validator.validateDocuments(person.getDocuments()));
         return result;
     }
 }
