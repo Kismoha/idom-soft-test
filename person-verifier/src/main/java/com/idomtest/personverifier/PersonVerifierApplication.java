@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class PersonVerifierApplication {
 
 	public static void main(String[] args) {
+
 		ConfigurableApplicationContext context = SpringApplication.run(PersonVerifierApplication.class, args);
 		ServiceHolder.getInstance().loadContext(context);
 

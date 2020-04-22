@@ -24,19 +24,29 @@ public class PersonReceiver {
 
     @Bean
     public HttpInvokerProxyFactoryBean invoker(){
+
         HttpInvokerProxyFactoryBean invoker = new HttpInvokerProxyFactoryBean();
         invoker.setServiceUrl("http://localhost:8080/validate");
         invoker.setServiceInterface(DocumentVerifierService.class);
         return invoker;
     }
 
+    /**
+     * conducts a person's computations
+     *  calls the validator
+     *  puts together the return value which holds:
+     *      Errors: a list of the validation errors
+     *      PersonDTO the filled out person object
+     * @param person
+     * @return A map containing the Errors and the validated PersonDTO
+     */
     @RequestMapping( value="/postPerson",
     produces = APPLICATION_JSON_VALUE)
     Map<String, Object> validatePerson(@RequestBody PersonDTO person) {
+
         Map<String, Object> result = new HashMap<>();
         result.put("Errors :", validator.validatePerson(person));
-        result.put("Person :", person);
-        result.put("Service result", serviceHolder.getDocumentVerifierService().validateDocuments(person));
+        result.put("PersonDTO", person);
         return result;
     }
 
