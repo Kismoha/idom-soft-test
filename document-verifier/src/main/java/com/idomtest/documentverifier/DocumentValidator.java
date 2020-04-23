@@ -1,14 +1,12 @@
 package com.idomtest.documentverifier;
 
-import com.idomtest.resources.DocumentDTO;
 import com.idomtest.resources.Error;
-import com.idomtest.resources.PersonDTO;
+import com.idomtest.resources.OkmanyDTO;
 import org.json.simple.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -26,11 +24,11 @@ public class DocumentValidator {
      * @param documents
      * @return List of Errors
      */
-    public List<Error> validateDocuments(List<DocumentDTO> documents){
+    public List<Error> validateDocuments(List<OkmanyDTO> documents){
 
         List<Error> errors = new ArrayList<>();
 
-        for(DocumentDTO document : documents){
+        for(OkmanyDTO document : documents){
 
             errors.addAll(validateDocument(document));
 
@@ -39,39 +37,39 @@ public class DocumentValidator {
         return errors.stream().filter(error -> error != null).collect(Collectors.toList());
     }
 
-    private List<Error> validateDocument(DocumentDTO document) {
+    private List<Error> validateDocument(OkmanyDTO document) {
 
         List<Error> errors = new ArrayList<>();
-        int documentType = document.getDocumentType();
+        String documentType = document.getOkmTipus();
 
-        errors.add(validateType(document.getDocumentNumber(),documentType));
-        errors.add(validatePicture(document.getDocumentPicture()));
-        errors.add(validateExpirationDate(document.getExpirationDate()));
+        errors.add(validateType(document.getOkmanySzam(),documentType));
+        errors.add(validatePicture(document.getOkmanyKep()));
+        errors.add(validateExpirationDate(document.getLejarDat()));
         errors.add(fillValid(document));
 
         return errors;
     }
 
-    private Error fillValid(DocumentDTO document) {
+    private Error fillValid(OkmanyDTO document) {
         try {
 
-            Date documentDate = new SimpleDateFormat("yyyy.MM.dd").parse(document.getExpirationDate());
+            Date documentDate = new SimpleDateFormat("yyyy.MM.dd").parse(document.getLejarDat());
             Date currentDate = new Date();
             int compareResult = documentDate.compareTo(currentDate);
 
             if(compareResult > 0){
 
-                document.setValid(true);
+                document.setErvenyes(true);
 
             }else{
 
-                document.setValid(false);
+                document.setErvenyes(false);
 
             }
 
         } catch (ParseException | NullPointerException e) {
 
-            return new Error("DocumentDTO","Hibás lejárati dátum! formátum: yyyy.MM.dd");
+            return new Error("OkmanyDTO","Rossz lejárati dátum! formátum: yyyy.MM.dd");
 
         }
         return null;
@@ -85,52 +83,52 @@ public class DocumentValidator {
 
         } catch (ParseException | NullPointerException e) {
 
-            return new Error(PersonDTO.class.toString(),"Rossz születési dátum formátum! Megengedett: yyyy.MM.dd");
+            return new Error("OkmanyDTO","Rossz lejárati dátum formátum! Megengedett: yyyy.MM.dd");
 
         }
 
         return null;
     }
 
-    private Error validatePicture(String documentPicture) {
+    private Error validatePicture(byte[] documentPicture) {
         //TODO implement picture validation
         return null;
     }
 
-    private Error validateType(String documentNumber, int documentType) {
+    private Error validateType(String documentNumber, String documentType) {
 
         for (JSONObject item : dictionary.getDictionary()){
 
-            if(item.get("kod").equals("" + documentType)){
+            if(item.get("kod").equals(documentType)){
 
                 return validateNumber(documentNumber,documentType);
 
             }
         }
 
-        return new Error(DocumentDTO.class.toString(),"Rossz dokumentum típus!");
+        return new Error("OkmanyDTO","Rossz dokumentum típus!");
     }
 
-    private Error validateNumber(String documentNumber, int documentType) {
+    private Error validateNumber(String documentNumber, String documentType) {
 
         switch(documentType){
-            case 1 :
+            case "1" :
 
                 if(documentNumber != null && Pattern.matches("[0-9]{6}+[a-zA-Z]{2}+",documentNumber)) {
 
                     return null;
                 }
 
-                return new Error(DocumentDTO.class.toString(),"Hibás dokumentum szám! Megengedett: 6 szám + 2 betű");
+                return new Error("OkmanyDTO","Hibás dokumentum szám! Megengedett: 6 szám + 2 betű");
 
-            case 2 :
+            case "2" :
 
                 if(documentNumber != null && Pattern.matches("[a-zA-Z]{2}+[0-9]{7}+",documentNumber)){
 
                     return null;
                 }
 
-                return new Error(DocumentDTO.class.toString(),"Hibás dokumentum szám! Megengedett: 2 betű + 7 szám");
+                return new Error("OkmanyDTO","Hibás dokumentum szám! Megengedett: 2 betű + 7 szám");
 
             default :
 
@@ -139,7 +137,7 @@ public class DocumentValidator {
                     return null;
                 }
 
-                return new Error(DocumentDTO.class.toString(),"Hibás dokumentum szám! Megengedett: MAX 10 karakter");
+                return new Error("OkmanyDTO","Hibás dokumentum szám! Megengedett: MAX 10 karakter");
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.idomtest.personverifier;
 
 import com.idomtest.resources.DocumentVerifierService;
-import com.idomtest.resources.PersonDTO;
+import com.idomtest.resources.SzemelyDTO;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
@@ -36,13 +36,13 @@ public class PersonReceiver {
      *  calls the validator
      *  puts together the return value which holds:
      *      Errors: a list of the validation errors
-     *      PersonDTO the filled out person object
+     *      SzemelyDTO the filled out person object
      * @param person
-     * @return A map containing the Errors and the validated PersonDTO
+     * @return A map containing the Errors and the validated SzemelyDTO
      */
     @RequestMapping( value="/postPerson",
     produces = APPLICATION_JSON_VALUE)
-    Map<String, Object> validatePerson(@RequestBody PersonDTO person) {
+    Map<String, Object> validatePerson(@RequestBody SzemelyDTO person) {
 
         Map<String, Object> result = new HashMap<>();
         result.put("Errors :", validator.validatePerson(person));
