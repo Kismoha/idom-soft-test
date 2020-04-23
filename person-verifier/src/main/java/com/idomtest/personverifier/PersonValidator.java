@@ -36,8 +36,6 @@ public class PersonValidator
         errors.add(validateGender(person.getNeme()));
         errors.add(validateCitizenship(person.getAllampKod()));
 
-        errors.addAll(checkValidDocumentNumbers(person.getOkmLista()));
-
         fillCitizenshipCode(person);
 
         return errors.stream().filter(error -> error != null).collect(Collectors.toList());
@@ -47,7 +45,14 @@ public class PersonValidator
 
         for(JSONObject item : dictionary.getDictionary()){
 
-            if(person.getAllampKod() == item.get("kod")){
+            String citizenship = person.getAllampKod();
+
+            if(citizenship == null){
+
+                return;
+            }
+
+            if(citizenship.equals(item.get("kod"))){
 
                 person.setAllampDekod( (String) item.get("allampolgarsag"));
                 break;
@@ -73,7 +78,7 @@ public class PersonValidator
 
     private Error validateGender(String gender) {
 
-        if(gender.equals("F") || gender.equals("M")){
+        if(gender != null && ( gender.equals("F") || gender.equals("M") )){
 
             return null;
         }
@@ -114,7 +119,12 @@ public class PersonValidator
                 "a kezdő vagy befejező Dr.-on kívül magyar ABC plussz Ä, pont, perjel, aposztróf, kötőjel és szóköz Max 80");
     }
 
-    private List<Error> checkValidDocumentNumbers(List<OkmanyDTO> documents) {
+    public List<Error> checkValidDocumentNumbers(List<OkmanyDTO> documents) {
+
+        if(documents == null){
+
+            return new ArrayList<>();
+        }
 
         List<Error> errors = new ArrayList<>();
         Map<String, Integer> documentTypeNumbers = new HashMap<>();
@@ -126,9 +136,9 @@ public class PersonValidator
 
             if (value == null) {
 
-                documentTypeNumbers.put(type, 0);
+                documentTypeNumbers.put(type,1);
 
-            } else {
+            } else if (document.isErvenyes()) {
 
                 documentTypeNumbers.put(type, value + 1);
             }

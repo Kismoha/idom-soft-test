@@ -1,6 +1,8 @@
 package com.idomtest.personverifier;
 
 import com.idomtest.resources.DocumentVerifierService;
+import com.idomtest.resources.Error;
+import com.idomtest.resources.OkmanyDTO;
 import com.idomtest.resources.SzemelyDTO;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -44,8 +49,18 @@ public class PersonReceiver {
     produces = APPLICATION_JSON_VALUE)
     Map<String, Object> validatePerson(@RequestBody SzemelyDTO person) {
 
+        List<Error> errors = new ArrayList<>();
+
+        errors.addAll(validator.validatePerson(person));
+
+        Map<String, Object> serviceResult = serviceHolder.getDocumentVerifierService().validateDocuments(person);
+        errors.addAll( (List<Error>) serviceResult.get("Errors"));
+        person.setOkmLista( (List<OkmanyDTO>) serviceResult.get("OkmanyDTOs"));
+
+        errors.addAll(validator.checkValidDocumentNumbers(person.getOkmLista()));
+
         Map<String, Object> result = new HashMap<>();
-        result.put("Errors :", validator.validatePerson(person));
+        result.put("Errors :", errors);
         result.put("PersonDTO", person);
         return result;
     }

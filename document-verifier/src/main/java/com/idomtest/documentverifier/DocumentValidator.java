@@ -28,6 +28,11 @@ public class DocumentValidator {
 
         List<Error> errors = new ArrayList<>();
 
+        if(documents == null){
+
+            return new ArrayList<>();
+        }
+
         for(OkmanyDTO document : documents){
 
             errors.addAll(validateDocument(document));
@@ -68,9 +73,7 @@ public class DocumentValidator {
             }
 
         } catch (ParseException | NullPointerException e) {
-
-            return new Error("OkmanyDTO","Rossz lejárati dátum! formátum: yyyy.MM.dd");
-
+            //Ignore this exception, expiration date has been already validated
         }
         return null;
     }
@@ -91,7 +94,30 @@ public class DocumentValidator {
     }
 
     private Error validatePicture(byte[] documentPicture) {
-        //TODO implement picture validation
+
+        //TODO current implementations do not work
+
+        /*ImageIcon image = new ImageIcon(documentPicture);
+        int width = image.getIconWidth();
+        int height = image.getIconHeight();
+
+        if(width != 827 || height != 1063){
+            return new Error("OkmanyDTO","A megadott okmany kep nem a megfelelő méretű! (1063*827)");
+        }*/
+
+        /*ByteArrayInputStream bais = new ByteArrayInputStream(documentPicture);
+        try {
+            BufferedImage image = ImageIO.read(bais);
+            int width = image.getWidth();
+            int height = image.getHeight();
+
+            if(width != 827 || height != 1063){
+                return new Error("OkmanyDTO","A megadott okmany kep nem a megfelelő méretű! (1063*827)");
+            }
+        } catch (IOException e) {
+            return new Error("OkmanyDtO","Image parsing error!");
+        }*/
+
         return null;
     }
 

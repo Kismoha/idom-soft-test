@@ -20,7 +20,7 @@ public class DocumentVerifierServiceImpl implements DocumentVerifierService {
     public Map<String, Object> validateDocuments(SzemelyDTO person) {
         Map<String, Object> result = new HashMap<>();
         result.put("Errors", validator.validateDocuments(person.getOkmLista()));
-        result.put("DocumentDTOs", person.getOkmLista());
+        result.put("OkmanyDTOs", person.getOkmLista());
         return result;
     }
 }
