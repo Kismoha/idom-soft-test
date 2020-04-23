@@ -7,6 +7,7 @@ import com.idomtest.resources.SzemelyDTO;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +46,7 @@ public class PersonReceiver {
      * @param person
      * @return A map containing the Errors and the validated SzemelyDTO
      */
-    @RequestMapping( value="/postPerson",
+    @PostMapping( value="/postPerson",
     produces = APPLICATION_JSON_VALUE)
     Map<String, Object> validatePerson(@RequestBody SzemelyDTO person) {
 
